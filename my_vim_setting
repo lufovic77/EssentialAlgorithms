@@ -1,0 +1,20 @@
+set nu
+set autoindent
+set shiftwidth=4
+set tabstop=4
+
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+    Plugin 'gmarik/Vundle.vim'
+	Plugin 'tpope/vim-fugitive'
+	Plugin 'L9'
+	Plugin 'git://git.wincent.com/command-t.git'
+	Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+	Plugin 'Raimondi/delimitMate'	//auto bracket
+call vundle#end()
+filetype plugin indent on
+
+" delimitMate
+let delimitMate_expand_cr=1
