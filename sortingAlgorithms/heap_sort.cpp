@@ -21,7 +21,7 @@ void max_heapify(vector<int> & heap, int index){
 	}
 	else
 		largest = index;
-	if( r <= heap_size && heap[r] > heap[index]){
+	if( r <= heap_size && heap[r] > heap[largest]){
 		largest = r;
 	}
 	if(largest != index){//should swap. 
@@ -31,7 +31,7 @@ void max_heapify(vector<int> & heap, int index){
 }
 
 void build_max_heap(vector <int> &heap){//argument passing using reference
-	heap_size = heap.size();
+	heap_size = heap.size()-1;
 	for(int i= heap.size()/2 ; i>=1; i--)//traverse without leaves cause leaf nodes are max-heap by itself... prove it!
 		max_heapify(heap, i);	
 }
@@ -54,6 +54,7 @@ int main(){ //max-heap sorting implementation
 	for(int i= heap_size ; i>=1; i--){
 		swap(heap[1], heap[heap_size]);
 		cout<<heap[heap_size--]<<" ";
+		max_heapify(heap, 1);
 	}
 
 }
