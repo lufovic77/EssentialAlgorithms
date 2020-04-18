@@ -19,8 +19,16 @@ void change(bool flag[100]){
 void ptr_change(int* p){
 	cout<<&p<<endl;
 	/*
-	 *address changes. why ? */
+	 *address changes. why ? 
+	Sol: Address is changed because 
+	int* p and  int* p1 are separate variables.
+	Only commone thing is that the address 
+	two variables are pointing is same. 
+	____    _______     _
+	|p1| -> |target| <-|p|
+	____	_______     _
 	return ;
+	*/
 }
 int main(){
 	//1. Poiner&reference passing (works same)
