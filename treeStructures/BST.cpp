@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
+#include <queue>
 using namespace std;
 //struct version
 typedef struct node{
@@ -9,12 +10,38 @@ typedef struct node{
 	struct node* right = NULL;
 	int key;
 }NODE;
-void level_order(NODE* tree){
-	if (tree == NULL)
-		return;
-	cout<<tree->key<<" ";
-	level_order(tree->left);
-	level_order(tree->right);
+void determine(NODE* n){
+	if(n == NULL)
+		cout<<"not exist"<<endl;
+	else
+		cout<<n->key<<"exist -> "<<n<<endl;
+}
+void level_order(queue<NODE*>& q){
+	if(q.empty())
+		return ;
+	NODE* tmp = q.front();
+	q.pop();
+	cout<<tmp -> key <<" ";
+	if(tmp -> left != NULL)
+		q.push(tmp->left);
+	if(tmp->right !=NULL)	
+		q.push(tmp->right);
+	level_order(q);
+	return ;
+}
+void inorder (NODE* node){
+	if(node == NULL)
+		return ;
+	inorder(node->left);
+	cout<<node->key;
+	inorder(node->right);
+}
+NODE* tree_search(NODE*tree, int key){
+	if(tree == NULL || tree->key == key)
+		return tree;
+	if(key < tree->key)
+		return tree_search(tree->left, key);
+	else return tree_search(tree->right, key);
 }
 NODE* tree_insert(NODE* tree, NODE* tmp){
 	NODE* y = NULL;
@@ -38,16 +65,18 @@ NODE* tree_insert(NODE* tree, NODE* tmp){
 int main(){
 	NODE* root = NULL;
 	/*
-	 * Allocate root of the tree*/
+	 Allocate root of the tree
+	 */
 	NODE* tmp = (NODE*)(malloc(sizeof(NODE)));
 	tmp->key = 7;
+	//Operation 1. Insert
 	root = tree_insert(root, tmp);
 	for(int i=1;i<=5;i++){
 		tmp = (NODE*)(malloc(sizeof(NODE)));
 		tmp->key = i*2;
 		root = tree_insert(root, tmp);
 	}
-	/* Result
+	/* Insert Result
 	 				7
 				   / \
 				  2	  8
@@ -56,5 +85,14 @@ int main(){
 					 \
 					  6
 	 */
-	level_order(root);
+	queue <NODE*> q;
+	q.push(root);
+	level_order(q);
+	cout<<endl;
+	//Operation 2. Search
+	NODE* ret = tree_search(root, 4);
+	determine(ret);
+	ret = tree_search(root, 3);
+	determine(ret);
+
 }
