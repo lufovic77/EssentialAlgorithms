@@ -17,6 +17,12 @@ void determine(NODE* n){
 		cout<<n->key<<"exist -> "<<n<<endl;
 }
 void level_order(queue<NODE*>& q){
+/*
+ * Level order traversal. 
+ * Implement using queue.
+ * Enqueue nodes of same level 
+ * for each function call. 
+ */
 	if(q.empty())
 		return ;
 	NODE* tmp = q.front();
@@ -37,6 +43,11 @@ void inorder (NODE* node){
 	inorder(node->right);
 }
 NODE* tree_search(NODE*tree, int key){
+/* 
+ * Tree searching function. 
+ * return the node pointer if exists or
+ * return NULL if non-exists.
+ */
 	if(tree == NULL || tree->key == key)
 		return tree;
 	if(key < tree->key)
@@ -44,6 +55,10 @@ NODE* tree_search(NODE*tree, int key){
 	else return tree_search(tree->right, key);
 }
 NODE* tree_insert(NODE* tree, NODE* tmp){
+/*
+ * Tree insert function.
+ * Search the proper place and place the new node.
+ */
 	NODE* y = NULL;
 	NODE* x = tree; //root of the tree
 	while(x!=NULL){
@@ -77,7 +92,7 @@ int main(){
 		root = tree_insert(root, tmp);
 	}
 	/* Insert Result
-	 				7
+					7
 				   / \
 				  2	  8
 				   \   \
