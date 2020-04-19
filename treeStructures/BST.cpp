@@ -3,7 +3,11 @@
 #include <cstdlib>
 #include <queue>
 using namespace std;
-/* Struct version
+/* Author: Kyungmin Kim (Joey Kim)
+ * Email: lufovic77@gmail.com
+ * Pseudo Code from "Introduction to Algorithms"
+ *
+ * Struct version
  * Will implement 7 basic operations
  * Search, Minimum, Maximum, Predecessor, 
  * Successor, Insert and Delete.
@@ -168,11 +172,18 @@ int main(){
 	determine(maxi);
 	determine(mini);
 	//Operation4. Successor & Predecessor
-	cout<<"----Operation4. Succ * Predec----"<<endl;
+	cout<<"----Operation4. Succ & Predec----"<<endl;
 	NODE* tmp2 = root->right;
 	NODE* suc = tree_successor(tmp2);
 	NODE* pre = tree_predecessor(tmp2);
 	determine(suc);
 	determine(pre);
+	//Operation5. Delete
+	cout<<"---Opderation5. Delete"<<endl;
+	level_order(q);
+	//tree_delete(tmp2);
+	queue <NODE*> q2;
+	q2.push(root);
+	level_order(q2);
 }
 
