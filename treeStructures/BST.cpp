@@ -3,7 +3,11 @@
 #include <cstdlib>
 #include <queue>
 using namespace std;
-//struct version
+/* Struct version
+ * Will implement 7 basic operations
+ * Search, Minimum, Maximum, Predecessor, 
+ * Successor, Insert and Delete.
+ */
 typedef struct node{
 	struct node* parent = NULL;
 	struct node* left = NULL;
@@ -12,9 +16,9 @@ typedef struct node{
 }NODE;
 void determine(NODE* n){
 	if(n == NULL)
-		cout<<"not exist"<<endl;
+		cout<<"not exists"<<endl;
 	else
-		cout<<n->key<<"exist -> "<<n<<endl;
+		cout<<n->key<<" exists -> "<<n<<endl;
 }
 void level_order(queue<NODE*>& q){
 /*
@@ -42,6 +46,20 @@ void inorder (NODE* node){
 	cout<<node->key;
 	inorder(node->right);
 }
+/*
+ * Evidence of maximum & minimum function
+ * lies in the BST property. 
+ */
+NODE* tree_minimum(NODE* node){
+	while(node->left!=NULL)
+		node=node->left;
+	return node;
+}
+NODE* tree_maximum(NODE* node){
+	while(node->right!=NULL)
+		node=node->right;
+	return node;
+}
 NODE* tree_search(NODE*tree, int key){
 /* 
  * Tree searching function. 
@@ -53,6 +71,38 @@ NODE* tree_search(NODE*tree, int key){
 	if(key < tree->key)
 		return tree_search(tree->left, key);
 	else return tree_search(tree->right, key);
+}
+NODE* tree_successor(NODE* node){
+/*
+ * Successor of x indicates the smallest key
+ * among the keys larger than x.
+ * Case1: When right subtree of x exists
+ * ->Find the minimum on the right subtree.
+ * Case2: Otherwise
+ * -> Find the parent of subtree which x belongs. 
+ */
+	if(node->right !=NULL)
+		return tree_minimum(node->right);
+	NODE* tmp = node->parent;
+	while(tmp !=NULL && node == tmp->right){
+		node = tmp;
+		tmp = tmp->parent;
+	}
+	return tmp;
+}
+NODE* tree_predecessor(NODE* node){
+/*
+ * Finding a predecessor is a symmetric of 
+ * finding a successor. 
+ */
+	if(node->left !=NULL)
+		return tree_maximum(node->left);
+	NODE* tmp = node->parent;
+	while(tmp!=NULL && node == tmp->left){
+		node = tmp;
+		tmp = tmp->parent;
+	}
+	return tmp;
 }
 NODE* tree_insert(NODE* tree, NODE* tmp){
 /*
@@ -84,7 +134,8 @@ int main(){
 	 */
 	NODE* tmp = (NODE*)(malloc(sizeof(NODE)));
 	tmp->key = 7;
-	//Operation 1. Insert
+	//Operation1. Insert
+	cout<<"----Operation1: Insert----"<<endl;
 	root = tree_insert(root, tmp);
 	for(int i=1;i<=5;i++){
 		tmp = (NODE*)(malloc(sizeof(NODE)));
@@ -104,10 +155,24 @@ int main(){
 	q.push(root);
 	level_order(q);
 	cout<<endl;
-	//Operation 2. Search
+	//Operation2. Search
+	cout<<"----Operation2: Search----"<<endl;
 	NODE* ret = tree_search(root, 4);
 	determine(ret);
 	ret = tree_search(root, 3);
 	determine(ret);
-
+	//Operation3. Maximum * Minimum
+	cout<<"----Operation3. Max & Min----"<<endl;
+	NODE* maxi = tree_maximum(root);
+	NODE* mini = tree_minimum(root);
+	determine(maxi);
+	determine(mini);
+	//Operation4. Successor & Predecessor
+	cout<<"----Operation4. Succ * Predec----"<<endl;
+	NODE* tmp2 = root->right;
+	NODE* suc = tree_successor(tmp2);
+	NODE* pre = tree_predecessor(tmp2);
+	determine(suc);
+	determine(pre);
 }
+
